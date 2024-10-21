@@ -9,7 +9,7 @@
             "name": "launch with arg",
             "request": "launch",
             "mainClass": "App",
-            "args": ["kamranahmedse"]
+            "args": ["kamranahmedse", "PushEvent"]
         },
 
         {
