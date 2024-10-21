@@ -2,18 +2,40 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class DataFormater {
-    public static void format(JSONArray jsonEventsArray){
-        if (jsonEventsArray==null) {
-            System.out.println("the arrqy is empty");
+    public static void eventsDisplayer(JSONArray jsonEventsArray){
+        if (jsonEventsArray==null || jsonEventsArray.length() == 0) {
+            System.out.println("the array is empty");
             return;
         }
         //System.out.println(jsonEventsArray);
         for(int i = 0; i < jsonEventsArray.length(); i++){
             JSONObject event = jsonEventsArray.getJSONObject(i);
+
+            eventPrinter(event);
+        }
+    }
+
+    public static void specificEventDisplayer(JSONArray jsonEventsArray, String eventType){
+        if (jsonEventsArray==null || jsonEventsArray.length() == 0) {
+            System.out.println("the array is empty");
+            return;
+        }
+        
+        //System.out.println(jsonEventsArray);
+        for(int i = 0; i < jsonEventsArray.length(); i++){
+            JSONObject event = jsonEventsArray.getJSONObject(i);
+
+            if(event.getString("type").equals(eventType))
+                eventPrinter(event);
+        
+        }
+    }
+
+    private static void eventPrinter(JSONObject event){
             JSONObject eventPayLoad = event.getJSONObject("payload");
             String repoName = event.getJSONObject("repo").getString("name");
             String createdAt = event.getString("created_at");
-
+    
             switch (event.getString("type")) {
                 case "PushEvent" -> {
                     System.out.println(createdAt+":: Pushed "+eventPayLoad.getInt("distinct_size")+" commit(s) to "+repoName);
@@ -34,8 +56,7 @@ public class DataFormater {
                     System.out.println(createdAt+":: Stared "+repoName);
                 }
                 case "GollumEvent"->{
-                    JSONObject page = eventPayLoad.getJSONArray("page").getJSONObject(0);
-                    
+                    JSONObject page = eventPayLoad.getJSONArray("page").getJSONObject(0);   
                     System.out.println(createdAt+":: "+page.getString("action")+" --"+page.getString("page_name")+"-- wiki page to "+repoName);
                 }
                 case "IssueCommentEvent"->{
@@ -68,11 +89,11 @@ public class DataFormater {
                 case "SponsorshipEvent"->{
                     System.out.println(createdAt+":: "+eventPayLoad.getString("action")+" Sponsorship action on "+repoName);
                 }
-                             
+                                
                 default->{
                     System.err.println("argument not recognized => "+event.getString("type"));
                 }
             }
         }
-    }
+      
 }

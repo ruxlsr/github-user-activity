@@ -1,3 +1,8 @@
+
+
+import org.json.JSONArray;
+import model.GithubDataFetcher;
+
 public class App {
     
     public static void main(String[] args) throws Exception {
@@ -7,9 +12,14 @@ public class App {
         }
 
         String apiEndpoint = "https://api.github.com/users/"+args[0]+"/events";
+
         System.out.println("the api endpoint: "+apiEndpoint);
-        GithubHttpClientDataFetcher gh = new GithubHttpClientDataFetcher();
-        DataFormater.format(gh.fetchAllEvent(apiEndpoint));
-        
+        GithubDataFetcher gh = new GithubHttpClientDataFetcher();
+        JSONArray events = gh.fetchAllEvent(apiEndpoint);
+
+        if(args.length == 2 && !args[1].isEmpty())
+            DataFormater.specificEventDisplayer(events, args[1]);
+        else
+            DataFormater.eventsDisplayer(events);
     }
 }
