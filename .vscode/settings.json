@@ -2,6 +2,8 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
-    ]
+        "lib/**/*.jar",
+    ],
+    "jdk.runConfig.arguments": "ruxlsr",
+    "java.dependency.packagePresentation": "hierarchical"
 }
