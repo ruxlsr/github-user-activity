@@ -1,18 +1,34 @@
-## Getting Started
+## Github-user-activity
+Hi. This is a Java CLi app to fetch github user activity.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Features
+* Fetch user activity 
+* Filter user activity of different type like **push event, commit comment event, watch event, and more**
+  
+## Installation 
+1. clone the project: 
+```bash 
+    git clone https://github.com/ruxlsr/github-user-activity.git
+    cd github-user-activity
+```
+2. Compile the source code:
+```bash
+    javac --module-path lib --add-modules org.json src/*.java src/model/*.java -d bin
+```
+3. run
+```bash
+cd bin
+# Display activities of a user
+java --module-path ../lib --add-modules org.json  App <username>
+# ex: java --module-path ../lib --add-modules org.json  App ruxlsr
+# or 
+# Display activity with filter
+java --module-path ../lib --add-modules org.json  App <username> [EventType]
+# ex: java --module-path ../lib --add-modules org.json  App ruxlsr PushEvent
+```
+**Nb:** *all event type are supported*. Refers to [github Event Type](https://docs.github.com/en/rest/using-the-rest-api/github-event-types?apiVersion=2022-11-28)
 
-## Folder Structure
 
-The workspace contains two folders by default, where:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+# Others
+That was provided by **[roadmap.sh](https://roadmap.sh/projects/github-user-activity)**
