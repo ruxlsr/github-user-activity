@@ -7,13 +7,13 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         if(args.length==0){
-            System.err.println("no argument passed. Syntax:: github-activity <username>");
+            System.err.println("no argument passed. Syntax:: github-activity <username> [Eventype]");
             return;
         }
 
         String apiEndpoint = "https://api.github.com/users/"+args[0]+"/events";
 
-        System.out.println("the api endpoint: "+apiEndpoint);
+        //System.out.println("the api endpoint: "+apiEndpoint);
         GithubDataFetcher gh = new GithubHttpClientDataFetcher();
         JSONArray events = gh.fetchAllEvent(apiEndpoint);
 
