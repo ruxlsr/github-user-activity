@@ -7,22 +7,36 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 import org.json.JSONArray;
 
+import model.GithubCacheManager;
 import model.GithubDataFetcher;
 
-public class GithubHttpClientDataFetcher implements GithubDataFetcher{
+public class GithubHttpClientDataFetcher implements GithubDataFetcher {
 
     @Override
-    public JSONArray fetchAllEvent(String url) {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(url)).header("Accept", "application/vnd.github+json" ).GET().build();
-        HttpResponse<String> response;
+    public JSONArray fetchAllEvent(String url) throws Exception {
+        // Verify in the cache
+        GithubCacheManager githubCacheManager = new GithubCacheManager(55555);
+        githubCacheManager.startServices();
 
-        try {
+        String value = githubCacheManager.getFromCache(url);
+        if (value != null) {
+            System.out.println("getted from cache : OK");
+            githubCacheManager.stopServices();
+            return new JSONArray(value);
+        }
+
+        try (HttpClient client = HttpClient.newHttpClient()) {
+
+            HttpRequest request = HttpRequest.newBuilder(URI.create(url))
+                    .header("Accept", "application/vnd.github+json").GET().build();
+            HttpResponse<String> response;
+
             response = client.send(request, BodyHandlers.ofString());
 
             switch (response.statusCode()) {
                 case 200 -> {
                     System.out.println("Status : OK");
+                    githubCacheManager.storeCache(url, response.body());
                     return new JSONArray(response.body());
                 }
                 case 304 -> {
@@ -31,20 +45,21 @@ public class GithubHttpClientDataFetcher implements GithubDataFetcher{
                 case 404 -> {
                     System.err.println("Error: not Found");
                 }
-                 case 403 -> {
+                case 403 -> {
                     System.err.println("Error: forbiden");
                 }
-                default-> {
-                    System.err.println("not Handled Error: "+response.statusCode());
+                default -> {
+                    System.err.println("not Handled Error: " + response.statusCode());
                 }
-                    
+
             }
         } catch (IOException e) {
-            System.err.println("Error:"+e.getMessage());
+            System.err.println("Error:" + e.getMessage());
         } catch (InterruptedException e) {
-            System.err.println("Error:"+e.getMessage());
+            System.err.println("Error:" + e.getMessage());
+        } finally {
+            githubCacheManager.stopServices();
         }
-        client.close();
-        return null;  
+        return null;
     }
 }
