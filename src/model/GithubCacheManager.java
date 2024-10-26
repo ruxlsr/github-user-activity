@@ -21,7 +21,7 @@ public class GithubCacheManager {
         }
 
         redisServer = new RedisServerBuilder()
-                .setting("save 100 100")
+                .setting("save 1 100")
                 .setting("appendonly yes")
                 .setting("dir /tmp/redis")
                 .port(port)
@@ -36,7 +36,7 @@ public class GithubCacheManager {
 
     public void storeCache(String key, String value) {
         if (!key.isBlank() && !value.isBlank()) {
-            String res = this.jedis.set(key, value);
+            String res = this.jedis.setex(key, 30, value);
             System.out.println("store cache res:" + res);
             return;
         }
@@ -47,9 +47,9 @@ public class GithubCacheManager {
         if (!key.isEmpty()) {
             String res = this.jedis.get(key);
             System.out.println("get cache :" + res == null ? "empty" : "ok");
-            return res;
+            if (jedis.ttl(key) > 0)
+                return res;
         }
-        System.err.println("Error caching: blank key");
         return null;
     }
 
