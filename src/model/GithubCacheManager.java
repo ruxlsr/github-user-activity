@@ -49,7 +49,9 @@ public class GithubCacheManager {
             System.out.println("get cache :" + res == null ? "empty" : "ok");
             if (jedis.ttl(key) > 0)
                 return res;
+            return null;
         }
+        System.err.println("Error caching: blank key");
         return null;
     }
 
