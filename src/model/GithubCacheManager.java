@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.io.IOException;
 
 import redis.clients.jedis.Jedis;
@@ -13,9 +14,16 @@ public class GithubCacheManager {
 
     public GithubCacheManager(int port) {
         this.port = port;
+
+        File dir = new File("/tmp/redis");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
         redisServer = new RedisServerBuilder()
-                .setting("save 30 100")
+                .setting("save 100 100")
                 .setting("appendonly yes")
+                .setting("dir /tmp/redis")
                 .port(port)
                 .build();
 
@@ -38,7 +46,7 @@ public class GithubCacheManager {
     public String getFromCache(String key) {
         if (!key.isEmpty()) {
             String res = this.jedis.get(key);
-            System.out.println("get cache res:" + res);
+            System.out.println("get cache :" + res == null ? "empty" : "ok");
             return res;
         }
         System.err.println("Error caching: blank key");
