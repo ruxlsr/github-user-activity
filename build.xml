@@ -32,7 +32,7 @@
         <java classname="${main-class}" fork="true">
             <classpath>
                 <path refid="classpath"/>
-                <path location="jarfile"/>
+                <path location="${jarfile}"/>
             </classpath>
             <arg value="ruxlsr"/>
         </java>
