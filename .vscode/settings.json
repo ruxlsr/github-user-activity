@@ -1,9 +1,8 @@
 {
-    "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-    ],
-    "jdk.runConfig.arguments": "ruxlsr",
-    "java.dependency.packagePresentation": "hierarchical"
+  "java.project.sourcePaths": ["src"],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": ["lib/**/*.jar"],
+  "jdk.runConfig.arguments": "ruxlsr",
+  "java.dependency.packagePresentation": "hierarchical",
+  "java.debug.settings.onBuildFailureProceed": true
 }

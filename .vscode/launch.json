@@ -6,12 +6,18 @@
   "configurations": [
     {
       "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "ruxlsr.App",
+      "projectName": "github-user-activity_3a1a1a71"
+    },
+    {
+      "type": "java",
       "name": "launch with arg",
       "request": "launch",
       "mainClass": "App",
       "args": ["kamranahmedse", "PushEvent"]
     },
-
     {
       "type": "java",
       "name": "Current File",
