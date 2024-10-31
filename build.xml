@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="githubUseractivity" basedir=".">
+<project name="github-user-activity" basedir=".">
     <property name="src.dir" value="src/"/>
     <property name="lib.dir" value="lib/"/> 
     <property name="build.dir" value="bin/classes"/>
