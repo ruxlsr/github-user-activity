@@ -1,6 +1,8 @@
+package ruxlsr;
 
 import org.json.JSONArray;
-import model.GithubDataFetcher;
+
+import ruxlsr.model.GithubDataFetcher;
 
 public class App {
 

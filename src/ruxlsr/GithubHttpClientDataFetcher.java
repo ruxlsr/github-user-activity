@@ -1,3 +1,5 @@
+package ruxlsr;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,8 +9,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 import org.json.JSONArray;
 
-import model.GithubCacheManager;
-import model.GithubDataFetcher;
+import ruxlsr.model.GithubCacheManager;
+import ruxlsr.model.GithubDataFetcher;
 
 public class GithubHttpClientDataFetcher implements GithubDataFetcher {
 
@@ -25,8 +27,8 @@ public class GithubHttpClientDataFetcher implements GithubDataFetcher {
             return new JSONArray(value);
         }
 
-        try (HttpClient client = HttpClient.newHttpClient()) {
-
+        HttpClient client = HttpClient.newHttpClient();
+        try {
             HttpRequest request = HttpRequest.newBuilder(URI.create(url))
                     .header("Accept", "application/vnd.github+json").GET().build();
             HttpResponse<String> response;

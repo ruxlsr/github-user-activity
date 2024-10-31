@@ -1,4 +1,4 @@
-package model;
+package ruxlsr.model;
 
 import org.json.JSONArray;
 

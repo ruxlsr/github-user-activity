@@ -1,4 +1,4 @@
-package model;
+package ruxlsr.model;
 
 import java.io.File;
 import java.io.IOException;
